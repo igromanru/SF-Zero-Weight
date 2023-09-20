@@ -93,5 +93,4 @@ SpacesInSquareBrackets: false
 Standard: Latest
 TabWidth: 4
 UseTab: AlignWithSpaces
-LineEnding: CRLF
 PackConstructorInitializers: BinPack
