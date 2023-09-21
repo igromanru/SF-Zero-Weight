@@ -1,5 +1,4 @@
 #include "DKUtil/Hook.hpp"
-#include "FindPattern.hpp"
 
 DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept
 {
@@ -21,29 +20,17 @@ namespace
 {
     void PatchZeroWeight()
     {
-        const auto address = FindPattern(GetModuleHandleW(nullptr), reinterpret_cast<const unsigned char *>("\xC4\xE1\xFA\x2A\xC7\xC5\xF2\x59\xF0"), "xxxxxxxxx");
-        if (address > 0)
+        auto* address = dku::Hook::Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">();
+        if (address)
         {
-            INFO("PatchZeroWeight: Found patch address: {0:x}", address);
-            constexpr char patchBytesArray[] = "\xC5\xF8\x57\xC0\x90"; // vxorps xmm0,xmm0,xmm0 nop
-            constexpr int patchBytesArraySize = std::size(patchBytesArray) - 1;
-            DWORD protectBackup;
-            if (VirtualProtect(reinterpret_cast<void *>(address), patchBytesArraySize, PAGE_EXECUTE_READWRITE, &protectBackup))
-            {
-                DEBUG("PatchZeroWeight: Patch size: {0:x}", patchBytesArraySize);
-                for (int i = 0; i < patchBytesArraySize; i++)
-                {
-                    reinterpret_cast<char *>(address)[i] = patchBytesArray[i];
-                }
-                if (VirtualProtect(reinterpret_cast<void *>(address), patchBytesArraySize, protectBackup, &protectBackup))
-                {
-                    INFO("PatchZeroWeight: Patch applied");
-                }
-            }
-            else
-            {
-                ERROR("PatchZeroWeight: Couldn't change memory protection");
-            }
+            INFO("PatchZeroWeight: Found patch address: {0:x}", reinterpret_cast<uintptr_t>(address));
+            constexpr DKUtil::Alias::OpCode patchAsm[]{
+                0xC5, 0xF8, 0x57, 0xC0, // vxorps xmm0,xmm0,xmm0
+                0x90, // nop
+            };
+            constexpr int patchSize = std::size(patchAsm);
+            const auto patchRef = dku::Hook::AddASMPatch(reinterpret_cast<uintptr_t>(address), std::make_pair(0, patchSize), {&patchAsm, sizeof(patchAsm)});
+            patchRef->Enable();
         }
         else
         {
