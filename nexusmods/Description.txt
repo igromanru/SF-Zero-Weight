@@ -36,7 +36,7 @@ To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from 
 Currently no known compatibility issues with any other mod
 
 [size=2][u][b]Source Code[/b][/u][/size]
-Coming soon
+[url=https://github.com/igromanru/SF-Zero-Weight]GitHub[/url]
 
 [size=2][u][b]Credits[/b][/u][/size]
 [list]
