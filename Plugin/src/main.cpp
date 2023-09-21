@@ -21,33 +21,25 @@ namespace
 	void PatchZeroWeight()
 	{
 		const auto address = FindPattern(GetModuleHandleW(nullptr), reinterpret_cast<const unsigned char*>("\xC4\xE1\xFA\x2A\xC7\xC5\xF2\x59\xF0"), "xxxxxxxxx");
-		if (address > 0)
-		{
+		if (address > 0) {
 			INFO("PatchZeroWeight: Found patch address: {0:x}", address);
-			constexpr char patchBytesArray[] = "\xC5\xF8\x57\xC0\x90"; // vxorps xmm0,xmm0,xmm0 nop
-			constexpr int patchBytesArraySize = std::size(patchBytesArray) - 1;
-			DWORD protectBackup;
-			if (VirtualProtect(reinterpret_cast<void*>(address), patchBytesArraySize, PAGE_EXECUTE_READWRITE, &protectBackup))
-			{
+			constexpr char patchBytesArray[] = "\xC5\xF8\x57\xC0\x90";  // vxorps xmm0,xmm0,xmm0 nop
+			constexpr int  patchBytesArraySize = std::size(patchBytesArray) - 1;
+			DWORD          protectBackup;
+			if (VirtualProtect(reinterpret_cast<void*>(address), patchBytesArraySize, PAGE_EXECUTE_READWRITE, &protectBackup)) {
 				DEBUG("PatchZeroWeight: Patch size: {0:x}", patchBytesArraySize);
-				for (int i = 0; i < patchBytesArraySize; i++)
-				{
+				for (int i = 0; i < patchBytesArraySize; i++) {
 					reinterpret_cast<char*>(address)[i] = patchBytesArray[i];
 				}
-				if (VirtualProtect(reinterpret_cast<void*>(address), patchBytesArraySize, protectBackup, &protectBackup))
-				{
+				if (VirtualProtect(reinterpret_cast<void*>(address), patchBytesArraySize, protectBackup, &protectBackup)) {
 					INFO("PatchZeroWeight: Patch applied");
 				}
-			}
-		    else
-			{
+			} else {
 				ERROR("PatchZeroWeight: Couldn't change memory protection");
-            }
-		}
-	    else
-		{
+			}
+		} else {
 			ERROR("PatchZeroWeight: Couldn't find the address to patch");
-        }
+		}
 	}
 
 	void MessageCallback(SFSE::MessagingInterface::Message* a_msg) noexcept
