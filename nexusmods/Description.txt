@@ -1,0 +1,45 @@
+[u][size=3][b]Introduction[/b][/size][/u]
+As someone who doesn't like to deal with the weight of loot in looter games, a mod like this is always the first thing I install. I wondered why no one had made a mod like this yet, so I decided to make one myself.
+
+[size=4][u][b]Description[/b][/u][/size]
+The mod / SFSE plugin patches the game so that the current weight (mass) of your ship is always zero. It simply allows you to loot as much you want and take anything with you.  
+The mod doesn't change your save file, as soon you uninstall it, your weight/mass is back to normal.  
+
+[size=4][u][b]Requirements[/b][/u][/size]
+[list]
+[*][size=3][url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url][/size]
+[/list]
+[size=4][u][b]Recommendations[/b][/u][/size]
+[list]
+[*][url=https://www.nexusmods.com/starfield/mods/2830]Weapon Swap Stuttering Fix[/url]
+[/list]
+[size=4][u][b]Installation via Vortex[/b][/u][/size]
+1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
+2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
+3. Install the mod in Vortex like you do with any other mods
+4. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay[/url]
+
+[size=4][u][b]Manual installation[/b][/u][/size]
+1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
+2. Use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod in a zip file
+3. Extract the content of the zip file into your game root directory.
+[size=2]For example: [i]C:\Program Files (x86)\Steam\steamapps\common\Starfield\[/i][/size]
+4. Make sure that the [b]SF-Zero-Weight.dll[/b] is now in the [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory
+[size=2]For example: [i]C:\Program Files (x86)\Steam\steamapps\common\Starfield[i]\Data\SFSE\plugins\SF-Zero-Weight.dll[/i][/i][/size]
+5. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay
+[/url]
+
+[size=4][u][b]Uninstall[/b][/u][/size]
+To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from your [i](game root)\Data\SFSE\plugins\[/i] directory.
+
+[size=4][u][b]Compatibility[/b][/u][/size]
+Currently no known compatibility issues with any other mod
+
+[size=2][u][b]Source Code[/b][/u][/size]
+Coming soon
+
+[size=2][u][b]Credits[/b][/u][/size]
+[list]
+[*][url=https://github.com/ianpatt/]ianpatt[/url] for [url=https://github.com/ianpatt/sfse]Starfield Script Extender[/url]
+[*][url=https://fearlessrevolution.com/memberlist.php?mode=viewprofile&u=523]Zanzer[/url]﻿, for his [url=https://fearlessrevolution.com/viewtopic.php?p=313155#p313155]CE table[/url]﻿, it inspired me to make this mod
+[/list]
