@@ -77,7 +77,7 @@ namespace
 
             const OpCode caveCode[] 
             {
-                0x48, 0xBF, fractionOfWeightPtr[0], fractionOfWeightPtr[1], fractionOfWeightPtr[2], fractionOfWeightPtr[3], // mov rdi, (config float value as big edian)
+                0x48, 0xBF, fractionOfWeightPtr[0], fractionOfWeightPtr[1], fractionOfWeightPtr[2], fractionOfWeightPtr[3], // mov rdi, (config float value)
                 0x00, 0x00, 0x00, 0x00,
                 0x66, 0x48, 0x0F, 0x6E, 0xFF, // movq xmm7,rdi
                 0xC5, 0xFA, 0x59, 0xC7 // vmulss xmm0,xmm0,xmm7

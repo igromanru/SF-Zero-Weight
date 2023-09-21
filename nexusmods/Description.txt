@@ -28,9 +28,16 @@ The mod doesn't change your save file, as soon you uninstall it, your weight/mas
 [size=2]For example: [i]C:\Program Files (x86)\Steam\steamapps\common\Starfield[i]\Data\SFSE\plugins\SF-Zero-Weight.dll[/i][/i][/size]
 5. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay
 [/url]
-
 [size=4][u][b]Uninstall[/b][/u][/size]
 To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from your [i](game root)\Data\SFSE\plugins\[/i] directory.
+
+[size=4][u][b]Configuration[/b][/u][/size]
+Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction of total items weight that will have effect on your total mass.
+1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory.
+2. Open the SF-Zero-Weight.toml with any Text Editor and change the value of [b]fractionOfWeight[/b].
+0.0 = 0%, 1.0 = 100%.
+If you want all the items weight only 25% of their original weight, change [b]fractionOfWeight[/b] to [i]fractionOfWeight = 0.25[/i]
+3. Save the file and start the game again.
 
 [size=4][u][b]Compatibility[/b][/u][/size]
 Currently no known compatibility issues with any other mod
