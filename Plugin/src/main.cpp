@@ -1,5 +1,6 @@
+#include "settings.hpp"
+
 #include "DKUtil/Hook.hpp"
-#include "DKUtil/Config.hpp"
 
 using namespace DKUtil::Alias;
 using namespace DKUtil::Hook;
@@ -34,34 +35,45 @@ DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept
 
 namespace
 {
-    class Settings : public dku::model::Singleton<Settings>
+    float Hook_GetFractionOfWeight() 
     {
-    private:
-        TomlConfig mainConfig = COMPILE_PROXY(Plugin::SETTINGS_NAME);
+        // maybe some calculations
+        return Settings::GetSingleton()->getFractionOfWeight();
+    }
 
-        Double fractionOfWeight{"fractionOfWeight"};
-    public:
-        float getFractionOfWeight()
+    struct Prolog : Xbyak::CodeGenerator
+    {
+        Prolog()
         {
-            return static_cast<float>(*fractionOfWeight);
-        }
+            // save xmm1
+            sub(rsp, 0x10);
+            movdqu(ptr[rsp], xmm1);
 
-        void Load() noexcept
-        {
-            static std::once_flag bound;
-            std::call_once(bound, [&]() { mainConfig.Bind<0.0, 10.0>(fractionOfWeight, 0.0); });
-
-            mainConfig.Load();
-        }
-
-        void Save() noexcept
-        {
-            mainConfig.GenerateIfMissing();
-            mainConfig.Write();
+            // save xmm0
+            sub(rsp, 0x10);
+            movdqu(ptr[rsp], xmm0);
         }
     };
 
-    void __cdecl Placeholder() {}
+    struct Epilog : Xbyak::CodeGenerator
+    {
+        Epilog()
+        {
+            // assign return value
+            vmovaps(xmm1, xmm0);
+
+            // restore xmm0
+            movdqu(xmm0, ptr[rsp]);
+            add(rsp, 0x10);
+
+            // calc new value
+            vmulss(xmm0, xmm0, xmm1);
+
+            // restore xmm1
+            movdqu(xmm1, ptr[rsp]);
+            add(rsp, 0x10);
+        }
+    };
 
     void PatchZeroWeight()
     {
@@ -71,20 +83,21 @@ namespace
             INFO("PatchZeroWeight: Found hook address: {:x}", address);
             auto fractionOfWeight = Settings::GetSingleton()->getFractionOfWeight();
             INFO("PatchZeroWeight: Settings->FractionOfWeight: {}", fractionOfWeight);
-            auto* fractionOfWeightPtr = reinterpret_cast<uint8_t*>(&fractionOfWeight);
-            DEBUG("PatchZeroWeight: FractionOfWeight as bytes: 0x{:x}, 0x{:x}, 0x{:x}, 0x{:x}", fractionOfWeightPtr[0], 
-                fractionOfWeightPtr[1], fractionOfWeightPtr[2], fractionOfWeightPtr[3]);
 
-            const OpCode caveCode[] 
-            {
-                0x48, 0xBF, fractionOfWeightPtr[0], fractionOfWeightPtr[1], fractionOfWeightPtr[2], fractionOfWeightPtr[3], // mov rdi, (config float value)
-                0x00, 0x00, 0x00, 0x00,
-                0x66, 0x48, 0x0F, 0x6E, 0xFF, // movq xmm7,rdi
-                0xC5, 0xFA, 0x59, 0xC7 // vmulss xmm0,xmm0,xmm7
-            };
-            const auto caveHook = AddCaveHook(address, std::make_pair(0, 5), FUNC_INFO(Placeholder), {&caveCode, sizeof(caveCode)}, std::make_pair(nullptr, 0), HookFlag::kRestoreBeforeProlog);
+            Prolog prolog{};
+            prolog.ready();
+            Epilog epilog{};
+            epilog.ready();
+
+            const auto caveHook = AddCaveHook(
+                address, 
+                { 0, 5 }, 
+                FUNC_INFO(Hook_GetFractionOfWeight), 
+                &prolog,
+                &epilog,
+                HookFlag::kRestoreBeforeProlog);
             caveHook->Enable();
-            INFO("PatchZeroWeight: hook applied", fractionOfWeight);
+            INFO("PatchZeroWeight: hook applied");
         }
         else
         {
@@ -125,7 +138,7 @@ DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface *a_sfse)
     INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
 
     // do stuff
-    SFSE::AllocTrampoline(1 << 10);
+    SFSE::AllocTrampoline(1 << 7);
 
     SFSE::GetMessagingInterface()->RegisterListener(MessageCallback);
 
