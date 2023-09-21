@@ -3,7 +3,8 @@ As someone who doesn't like to deal with the weight of items in looter games, a 
 
 [size=4][u][b]Description[/b][/u][/size]
 The mod / SFSE plugin patches the game so that the current weight (mass) of you and your ship is always zero. It allows you to just loot as much as you want and take everything with you.  
-The mod doesn't change your save file, as soon you uninstall it, your weight/mass will be back to normal.  
+The mod doesn't change your save file or mass of items, as soon you uninstall it, your weight/mass will be back to normal.  
+With v1.1.0 you can set what percentage of the total items weight is accounted for. See below the Configuration section for more details.
 
 [size=4][u][b]Requirements[/b][/u][/size]
 [list]
@@ -36,7 +37,7 @@ Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction o
 1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory.
 2. Open the SF-Zero-Weight.toml with any Text Editor and change the value of [b]fractionOfWeight[/b].
 0.0 = 0%, 1.0 = 100%.
-If you want all the items weight only 25% of their original weight, change [b]fractionOfWeight[/b] to [i]fractionOfWeight = 0.25[/i]
+If you want all the items weight only 25% of their original weight, change [b]fractionOfWeight[/b] to [b]0.25[/b]
 3. Save the file and start the game again.
 
 [size=4][u][b]Compatibility[/b][/u][/size]
