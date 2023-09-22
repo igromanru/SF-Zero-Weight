@@ -1,4 +1,4 @@
-#include "settings.hpp"
+#include "Settings.hpp"
 
 #include "DKUtil/Hook.hpp"
 
@@ -38,7 +38,7 @@ namespace
     float Hook_GetFractionOfWeight() 
     {
         // maybe some calculations
-        return Settings::GetSingleton()->getFractionOfWeight();
+        return Settings::GetSingleton()->GetFractionOfWeight();
     }
 
     struct Prolog : Xbyak::CodeGenerator
@@ -78,11 +78,10 @@ namespace
     void PatchZeroWeight()
     {
         auto address = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
-        if (address > 0)
+        if (address)
         {
             INFO("PatchZeroWeight: Found hook address: {:x}", address);
-            auto fractionOfWeight = Settings::GetSingleton()->getFractionOfWeight();
-            INFO("PatchZeroWeight: Settings->FractionOfWeight: {}", fractionOfWeight);
+            INFO("PatchZeroWeight: Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
 
             Prolog prolog{};
             prolog.ready();

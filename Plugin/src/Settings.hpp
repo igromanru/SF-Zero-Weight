@@ -1,6 +1,5 @@
 #pragma once
 
-#include "DKUtil/Hook.hpp"
 #include "DKUtil/Config.hpp"
 
 using namespace DKUtil::Alias;
@@ -11,9 +10,8 @@ private:
     TomlConfig mainConfig = COMPILE_PROXY(Plugin::SETTINGS_NAME);
 
     Double fractionOfWeight{"fractionOfWeight"};
-
 public:
-    float getFractionOfWeight()
+    float GetFractionOfWeight()
     {
         return static_cast<float>(*fractionOfWeight);
     }
