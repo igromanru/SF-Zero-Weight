@@ -2,7 +2,7 @@
 As someone who doesn't like to deal with the weight of items in looter games, a mod like this is always the first thing I install. I wondered why no one had made a mod like this yet, so I decided to make one myself.
 
 [size=4][u][b]Description[/b][/u][/size]
-The mod / SFSE plugin patches the game so that the current weight (mass) of you and your ship is always zero. It allows you to just loot as much as you want and take everything with you.  
+The mod / SFSE plugin patches the game so that the current weight (mass) of your character and your ship is always zero. It allows you to just loot as much as you want and take everything with you.  
 The mod doesn't change your save file or mass of items, as soon you uninstall it, your weight/mass will be back to normal.  
 With v1.1.0 you can set what percentage of the total items weight is accounted for. See below the Configuration section for more details.
 
