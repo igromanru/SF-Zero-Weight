@@ -1,37 +1,4 @@
-#include "Settings.hpp"
-
-#include "DKUtil/Hook.hpp"
-
-using namespace DKUtil::Alias;
-using namespace DKUtil::Hook;
-
-DLLEXPORT constinit auto SFSEPlugin_Version = []() noexcept
-{
-    SFSE::PluginVersionData data{};
-
-    data.PluginVersion(Plugin::Version);
-    data.PluginName(Plugin::NAME);
-    data.AuthorName(Plugin::AUTHOR);
-    data.UsesSigScanning(true);
-    // data.UsesAddressLibrary(true);
-    data.HasNoStructUse(true);
-    // data.IsLayoutDependent(true);
-    data.CompatibleVersions({
-        SFSE::RUNTIME_LATEST,
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 1),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 2),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 3),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 4),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 5),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 6),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 7),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 8),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 9),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 10),
-    });
-
-    return data;
-}();
+#include "PCH.h"
 
 namespace
 {
@@ -87,15 +54,15 @@ namespace
             prolog.ready();
             Epilog epilog{};
             epilog.ready();
-
-            const auto caveHook = AddCaveHook(
+            
+            const auto caveHookHandle = AddCaveHook(
                 address, 
                 { 0, 5 }, 
                 FUNC_INFO(Hook_GetFractionOfWeight), 
                 &prolog,
                 &epilog,
                 HookFlag::kRestoreBeforeProlog);
-            caveHook->Enable();
+            caveHookHandle->Enable();
             INFO("PatchZeroWeight: hook applied");
         }
         else
@@ -143,3 +110,38 @@ DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface *a_sfse)
 
     return true;
 }
+
+DLLEXPORT constexpr auto SFSEPlugin_Version = []() noexcept
+{
+    SFSE::PluginVersionData data{};
+
+    data.PluginVersion(Plugin::Version);
+    data.PluginName(Plugin::NAME);
+    data.AuthorName(Plugin::AUTHOR);
+    data.UsesSigScanning(true);
+    // data.UsesAddressLibrary(false);
+    data.HasNoStructUse(true);
+    data.IsLayoutDependent(false);
+
+    // A little workaround, until SFSE implements "version independence" that would be set by UsesSigScanning or UsesAddressLibrary
+    data.CompatibleVersions({
+        SFSE::RUNTIME_SF_1_7_29,
+        SFSE::RUNTIME_LATEST,
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 1),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 2),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 3),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 4),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 5),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 6),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 7),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 8),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 9),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 10),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 11),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 12),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 13),
+        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 14)
+    });
+
+    return data;
+}();
