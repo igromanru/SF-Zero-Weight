@@ -33,8 +33,9 @@ With v1.1.0 you can set what percentage of the total items weight is accounted f
 To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from your [i](game root)\Data\SFSE\plugins\[/i] directory.
 
 [size=4][u][b]Configuration[/b][/u][/size]
-Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction of total items weight that will have effect on your total mass.
+Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction of total items weight that will have effect on your total mass.  
 1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory.
+    [size=2]If the file doesn't exist, start the game once, until the main menu, then the file should appear But close the game again, before doing any changes.[/size]
 2. Open the SF-Zero-Weight.toml with any Text Editor and change the value of [b]fractionOfWeight[/b].
 0.0 = 0%, 1.0 = 100%.
 If you want all the items weight only 25% of their original weight, change [b]fractionOfWeight[/b] to [b]0.25[/b]

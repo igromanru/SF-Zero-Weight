@@ -44,10 +44,10 @@ namespace
 
     void PatchZeroWeight()
     {
-        auto address = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
-        if (address)
+        const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
+        if (hookAddress)
         {
-            INFO("Found hook address: {:x}", address);
+            INFO("Found hook address: {:x}. Game base: {:x}", hookAddress, Module::get().base());
             INFO("Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
 
             Prolog prolog{};
@@ -56,7 +56,7 @@ namespace
             epilog.ready();
             
             const auto caveHookHandle = AddCaveHook(
-                address, 
+                hookAddress, 
                 { 0, 5 }, 
                 FUNC_INFO(Hook_GetFractionOfWeight), 
                 &prolog,
