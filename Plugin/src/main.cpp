@@ -47,8 +47,8 @@ namespace
         auto address = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
         if (address)
         {
-            INFO("PatchZeroWeight: Found hook address: {:x}", address);
-            INFO("PatchZeroWeight: Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
+            INFO("Found hook address: {:x}", address);
+            INFO("Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
 
             Prolog prolog{};
             prolog.ready();
@@ -63,11 +63,11 @@ namespace
                 &epilog,
                 HookFlag::kRestoreBeforeProlog);
             caveHookHandle->Enable();
-            INFO("PatchZeroWeight: hook applied");
+            INFO("Hook applied");
         }
         else
         {
-            ERROR("PatchZeroWeight: Couldn't find the address to hook");
+            ERROR("Couldn't find the address to hook");
         }
     }
 
@@ -94,10 +94,10 @@ void SFSEPlugin_Preload(SFSE::LoadInterface* a_sfse);
 DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface *a_sfse)
 {
 #ifndef NDEBUG
-    MessageBoxW(NULL, L"Loaded. You can attach the debugger now", L"SF-Zero-Weight Plugin", NULL);
+    MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF-Zero-Weight Plugin", NULL);
 #endif
 
-    SFSE::Init(a_sfse, false);
+    Init(a_sfse, false);
 
     DKUtil::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
 
@@ -122,26 +122,9 @@ DLLEXPORT constexpr auto SFSEPlugin_Version = []() noexcept
     // data.UsesAddressLibrary(false);
     data.HasNoStructUse(true);
     data.IsLayoutDependent(false);
-
-    // A little workaround, until SFSE implements "version independence" that would be set by UsesSigScanning or UsesAddressLibrary
     data.CompatibleVersions({
         SFSE::RUNTIME_SF_1_7_29,
-        SFSE::RUNTIME_LATEST,
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 1),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 2),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 3),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 4),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 5),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 6),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 7),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 8),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 9),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 10),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 11),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 12),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 13),
-        REL::Version(SFSE::RUNTIME_LATEST[0], SFSE::RUNTIME_LATEST[1], SFSE::RUNTIME_LATEST[2], SFSE::RUNTIME_LATEST[3] + 14)
-    });
+        SFSE::RUNTIME_LATEST});
 
     return data;
 }();
