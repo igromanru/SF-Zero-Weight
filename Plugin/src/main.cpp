@@ -123,8 +123,11 @@ DLLEXPORT constexpr auto SFSEPlugin_Version = []() noexcept
     data.HasNoStructUse(true);
     data.IsLayoutDependent(false);
     data.CompatibleVersions({
+        SFSE::RUNTIME_SF_1_6_35,
+        SFSE::RUNTIME_SF_1_7_23,
         SFSE::RUNTIME_SF_1_7_29,
-        SFSE::RUNTIME_LATEST});
+        SFSE::RUNTIME_LATEST
+    });
 
     return data;
 }();
