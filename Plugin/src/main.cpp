@@ -42,13 +42,15 @@ namespace
         }
     };
 
-    void PatchZeroWeight()
+    bool PatchZeroWeight()
     {
         const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
         if (hookAddress)
         {
             INFO("Found hook address: {:x}. Game base: {:x}", hookAddress, Module::get().base());
             INFO("Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
+
+            Trampoline::AllocTrampoline(128);
 
             Prolog prolog{};
             prolog.ready();
@@ -64,70 +66,35 @@ namespace
                 HookFlag::kRestoreBeforeProlog);
             caveHookHandle->Enable();
             INFO("Hook applied");
+            return true;
         }
         else
         {
             ERROR("Couldn't find the address to hook");
         }
-    }
-
-    void MessageCallback(SFSE::MessagingInterface::Message *a_msg) noexcept
-    {
-        switch (a_msg->type)
-        {
-        case SFSE::MessagingInterface::kPostLoad:
-            Settings::GetSingleton()->Load();
-            PatchZeroWeight();
-            // Settings::GetSingleton()->Save();
-            break;
-        default:
-            break;
-        }
+        return false;
     }
 } // namespace
 
-/**
-// for preload plugins
-void SFSEPlugin_Preload(SFSE::LoadInterface* a_sfse);
-/**/
-
-DLLEXPORT bool SFSEAPI SFSEPlugin_Load(const SFSE::LoadInterface *a_sfse)
+DWORD WINAPI Thread(LPVOID param)
 {
-#ifndef NDEBUG
-    MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF-Zero-Weight Plugin", NULL);
-#endif
-
-    Init(a_sfse, false);
-
-    DKUtil::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
-
-    INFO("{} v{} loaded", Plugin::NAME, Plugin::Version);
-
-    // do stuff
-    SFSE::AllocTrampoline(1 << 7);
-
-    SFSE::GetMessagingInterface()->RegisterListener(MessageCallback);
-
-    return true;
+    Settings::GetSingleton()->Load();
+    return PatchZeroWeight();
 }
 
-DLLEXPORT constexpr auto SFSEPlugin_Version = []() noexcept
+
+BOOL APIENTRY DllMain(HMODULE a_hModule, DWORD a_dwReason, LPVOID a_lpReserved)
 {
-    SFSE::PluginVersionData data{};
+    if (a_dwReason == DLL_PROCESS_ATTACH)
+    {
+#ifndef NDEBUG
+        MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF-Zero-Weight ASI Plugin", NULL);
+#endif
+        dku::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
+        INFO("Game: {}", dku::Hook::GetProcessName());
 
-    data.PluginVersion(Plugin::Version);
-    data.PluginName(Plugin::NAME);
-    data.AuthorName(Plugin::AUTHOR);
-    data.UsesSigScanning(true);
-    // data.UsesAddressLibrary(false);
-    data.HasNoStructUse(true);
-    data.IsLayoutDependent(false);
-    data.CompatibleVersions({
-        SFSE::RUNTIME_SF_1_6_35,
-        SFSE::RUNTIME_SF_1_7_23,
-        SFSE::RUNTIME_SF_1_7_29,
-        SFSE::RUNTIME_LATEST
-    });
+        CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));
+    }
 
-    return data;
-}();
+    return TRUE;
+}

@@ -1,5 +1,6 @@
 #pragma once
 
+#define CONFIG_PATH "Plugins\\"
 #include "DKUtil/Config.hpp"
 
 using namespace DKUtil::Alias;

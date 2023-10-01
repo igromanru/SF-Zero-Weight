@@ -39,7 +39,6 @@ source_group(
 # dependencies
 find_package(spdlog CONFIG REQUIRED)
 find_dependency_path(DKUtil include/DKUtil/Logger.hpp)
-find_dependency_path(CommonLibSF CommonLibSF/include/SFSE/SFSE.h)
 
 # cmake target
 # runtime
@@ -67,7 +66,6 @@ target_link_libraries(
 	${PROJECT_NAME} 
 	PRIVATE
 		DKUtil::DKUtil
-		CommonLibSF::CommonLibSF
 		spdlog::spdlog
 )
 
@@ -104,7 +102,7 @@ if (MSVC)
 			/Zc:trigraphs
 			/Zc:wchar_t
 			/wd4200 # nonstandard extension used : zero-sized array in struct/union
-			/FI${CMAKE_CURRENT_SOURCE_DIR}/src/PCH.h
+			/FI${CMAKE_BINARY_DIR}/CMakeFiles/${PROJECT_NAME}.dir/$<CONFIG>/cmake_pch.hxx
 	)
 endif()
 
