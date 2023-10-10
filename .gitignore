@@ -8,3 +8,4 @@ deploy-*.ps1
 *.pdb
 *.lib
 *.exp
+*.asi
