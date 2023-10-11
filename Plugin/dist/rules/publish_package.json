@@ -6,6 +6,27 @@
             "{dist}\\Plugins\\"
         ]
     },
+	{
+        "action": "copy_if",
+        "params": [
+            "{dist}\\*.ini",
+            "{dist}\\Plugins\\"
+        ]
+    },
+	{
+        "action": "copy_if",
+        "params": [
+            "{dist}\\*.json",
+            "{dist}\\Plugins\\"
+        ]
+    },
+	{
+        "action": "copy_if",
+        "params": [
+            "{dist}\\*.toml",
+            "{dist}\\Plugins\\"
+        ]
+    },
     {
         "action": "package",
         "config": "Release",
