@@ -1,0 +1,23 @@
+[size=4][b]Game Update Information[/b][/size]
+The mod uses signature scanning to find the right address to patch, it doesn't need updates until SFSE refuses to load it or it stops working after major code changes in the game.  
+If you use the SFSE version, make sure to update the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] for the game version that you use. 
+Most of the time you will only have to wait for an SFSE update. 
+Users of the ASI Loader version don't have to care about updates until the mod stops working.  
+Thanks to the byte pattern signature scan, the mod verifies the integrity automatically, therefore it should never crash your game, if the code mismatches after a game update. It will simply stop working and you will find an "error" message in the log file.
+
+[b][size=4]Configuration Information[/size][/b]
+If you're a new user of the mod and don't have the [b]SF-Zero-Weight.toml[/b] file in the [i]\steamapps\common\Starfield\Data\SFSE\plugins\[/i] (SFSE version) or  [i]\steamapps\common\Starfield\Plugins\[/i] (ASI Loader version) directory, start the game once. The default toml file will be created automatically. Then close the game and change what you need. (It might be a bit different with MO2, let me know if you have issues)
+I removed the toml file from the release, because otherwise each update overwrites existing file and you lose your configuration. 
+
+[b][size=4]GamePass Version[/size][/b]
+The GamePass Version of the game has permission restrictions to read/write files in specific locations. This is why SFSE doesn't work. The same problem occurs with the configuration file. Since I don't have the GamePass version, I don't know what exactly happens and I can't test if I can write/read the toml file from a different directory.  
+Therefore, for now it's your best bet to use the ASI version of the mod 1.0.0, which has no logging or configurations.
+
+[b][size=4]Troubleshooting[/size][/b]
+If you're 100% sure that you're using the right SFSE for your game version and you still have trouble with the mod, please provide following information, if you want to report an issue.  
+[list=1]
+[*]Your game version and update version (Steam/GamePass/Cracked, version 1.7.36 etc.)
+[*]Which mod version are you using, SFSE or ASI
+[*]Provide content of log files. For SFSE all logs should be in the Documents directory ([i]C:\Users\(windows user name)\Documents\My Games\Starfield\SFSE\Logs\[/i]), there I need the content of [b]sfse.txt[/b], [b]sfse_loader.txt[/b] and [b]SF-Zero-Weight.log[/b] files.
+For the ASI version, if you use the v1.1.1 the log file [b]SF-Zero-Weight.log[/b] should be in the [i](game root)/Plugins/[/i] directory. For GamePass and v1.0.0 there are no logs, sorry.
+[/list]
