@@ -1,34 +1,30 @@
-[u][size=3][b]Introduction[/b][/size][/u]
+[font=Verdana][size=3][b]Introduction[/b][/size][/font]
 As someone who doesn't like to deal with the weight of items in looter games, a mod like this is always the first thing I install. I wondered why no one had made a mod like this yet, so I decided to make one myself.
 
-[size=4][u][b]Description[/b][/u][/size]
+[font=Verdana][size=4][b]Description[/b][/size][/font]
 The mod / SFSE plugin patches the game so that the current weight (mass) of your character and your ship is always zero. It allows you to just loot as much as you want and take everything with you.  
 The mod doesn't change your save file or mass of items, as soon you uninstall it, your weight/mass will be back to normal.  
 With v1.1.0 you can set what percentage of the total items weight is accounted for. See below the Configuration section for more details.
 
-[size=4][u][b]Requirements[/b][/u][/size]
+[font=Verdana][size=4][b]Requirements[/b][/size][/font]
 [list]
 [*][size=3][url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url][/size]
 [*][b]Or[/b]
 [*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size] (bink2w64.dll version)
 [/list]
-[size=4][u][b]Recommendations[/b][/u][/size]
-[list]
-[*][url=https://www.nexusmods.com/starfield/mods/2830]Weapon Swap Stuttering Fix[/url]
-[/list]
-[size=4][u][b]Installation of the SFSE version via Vortex[/b][/u][/size]
+[font=Verdana][size=4][b]Installation of the SFSE version via Vortex[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
 2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
 3. Install the mod in Vortex like you do with any other mods
 4. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay[/url]
 
-[size=4][u][b]Installation of the ASI Loader version via Vortex[/b][/u][/size]
+[font=Verdana][size=4][b]Installation of the ASI Loader version via Vortex[/b][/size][/font]
 1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first by downloading the [b]bink2w64.dll[/b]. Rename the original bink2w64.dll in the game root directory to [b]bink2w64Hooked.dll[/b] then copy the downloaded DLL in the same directory.
 2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
 3. Install the mod in Vortex like you do with any other mods
 4. The ASI loader will start automatically every time you start the game
 
-[size=4][u][b]Manual installation of the the SFSE version[/b][/u][/size]
+[font=Verdana][size=4][b]Manual installation of the the SFSE version[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
 2. Use the [b]Manual Download[/b] button in [i]Files[/i] tab to download the mod in a zip file
 3. Extract the content of the zip file into your game root directory.
@@ -37,10 +33,10 @@ With v1.1.0 you can set what percentage of the total items weight is accounted f
 [size=2]For example: [i]C:\Program Files (x86)\Steam\steamapps\common\Starfield[i]\Data\SFSE\plugins\SF-Zero-Weight.dll[/i][/i][/size]
 5. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay
 [/url]
-[size=4][u][b]Uninstall[/b][/u][/size]
+[font=Verdana][size=4][b]Uninstall[/b][/size][/font]
 To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from your [i](game root)\Data\SFSE\plugins\[/i] directory.
 
-[size=4][u][b]Configuration[/b][/u][/size]
+[font=Verdana][size=4][b]Configuration[/b][/size][/font]
 Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction of total items weight that will have effect on your total mass.  
 1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version or in the  [i](game root)\Plugins\[/i] for the ASI Loader version.
     [size=2]If the file doesn't exist, start the game once, until the main menu, then the file should appear But close the game again, before doing any changes.[/size]
@@ -49,15 +45,21 @@ Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction o
 If you want all the items weight only 25% of their original weight, change [b]fractionOfWeight[/b] to [b]0.25[/b]
 3. Save the file and start the game again.
 
-[size=4][u][b]Compatibility[/b][/u][/size]
+[font=Verdana][size=4][b]Compatibility[/b][/size][/font]
 Currently no known compatibility issues with any other mod
 
-[size=2][u][b]Source Code[/b][/u][/size]
-[url=https://github.com/igromanru/SF-Zero-Weight]GitHub[/url]
-
+[b][font=Verdana][size=4]Bug Reporting[/size][/font][/b]
+If you're 100% sure that you're using the right SFSE for your game version and you still have trouble with the mod, please provide following information, if you want to report an issue.  
+[list=1]
+[*]Your game version and update version (Steam/GamePass/Cracked, version 1.7.36 etc.)
+[*]Which mod version are you using, SFSE or ASI
+[*]Provide content of log files. For SFSE all logs should be in the Documents directory ([i]C:\Users\(windows user name)\Documents\My Games\Starfield\SFSE\Logs\[/i]), there I need the content of [b]sfse.txt[/b], [b]sfse_loader.txt[/b] and [b]SF-Zero-Weight.log[/b] files.
+For the ASI version, if you use the v1.1.1 the log file [b]SF-Zero-Weight.log[/b] should be in the [i](game root)/Plugins/[/i] directory. For GamePass and v1.0.0 there are no logs, sorry.
+[/list]
 [size=2][u][b]Credits[/b][/u][/size]
 [list]
 [*][url=https://github.com/ianpatt/]ianpatt[/url] for [url=https://github.com/ianpatt/sfse]Starfield Script Extender[/url]
 [*][url=https://github.com/gottyduke]gottyduke[/url] for [url=https://github.com/gottyduke/DKUtil]DKUtil[/url] and help to improve my code
 [*][url=https://fearlessrevolution.com/memberlist.php?mode=viewprofile&u=523]Zanzer[/url]﻿, for his [url=https://fearlessrevolution.com/viewtopic.php?p=313155#p313155]CE table[/url]﻿, it inspired me to make this mod
 [/list]
+[size=1][url=https://github.com/igromanru/SF-Zero-Weight]GitHub[/url][/size]
