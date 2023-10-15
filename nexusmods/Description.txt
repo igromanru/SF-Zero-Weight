@@ -10,18 +10,18 @@ With v1.1.0 you can set what percentage of the total items weight is accounted f
 [list]
 [*][size=3][url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url][/size]
 [*][b]Or[/b]
-[*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size] (bink2w64.dll version)
+[*][size=3][url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url][/size]
 [/list]
-[font=Verdana][size=4][b]Installation of the SFSE version via Vortex[/b][/size][/font]
+[font=Verdana][size=4][b]Installation of the SFSE version via a mod manage[/b][/size][/font]
 1. You NEED to install the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] manually first and always launch the game with it, otherwise the mod won't work
-2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
-3. Install the mod in Vortex like you do with any other mods
+2. Then to download the mod click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
+3. Install the mod in Vortex or MO2 like you do with any other mod
 4. Always launch the game with SFSE_loader. Here is a guide how to do it via steam: [url=https://www.nexusmods.com/starfield/mods/689]SFSE - Launch on Steam with In-Game Overlay[/url]
 
-[font=Verdana][size=4][b]Installation of the ASI Loader version via Vortex[/b][/size][/font]
-1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first by downloading the [b]bink2w64.dll[/b]. Rename the original bink2w64.dll in the game root directory to [b]bink2w64Hooked.dll[/b] then copy the downloaded DLL in the same directory.
-2. Simply click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
-3. Install the mod in Vortex like you do with any other mods
+[font=Verdana][size=4][b]Installation of the ASI Loader version via a mod manager[/b][/size][/font]
+1. You NEED to install the [url=https://github.com/ThirteenAG/Ultimate-ASI-Loader]Ultimate ASI Loader[/url] manually first. Scroll down to the "Description" on the GitHub page and use [b]one of[/b] the following DLLs to install the ASI Loader: [b]dinput8.dll[/b] (x64), [b]wininet.dll[/b] (x64), [b]winmm.dll[/b]  (x64) or [b]binkw32.dll[/b].
+2. Then to download the mod click on [b]Mod Manager Download[/b] button in [i]Files[/i] tab
+3. Install the mod in Vortex or MO2 like you do with any other mod
 4. The ASI loader will start automatically every time you start the game
 
 [font=Verdana][size=4][b]Manual installation of the the SFSE version[/b][/size][/font]
@@ -38,7 +38,7 @@ To uninstall the mod/plugin manually, delete the [b]SF-Zero-Weight.dll[/b] from 
 
 [font=Verdana][size=4][b]Configuration[/b][/size][/font]
 Since v1.1.0 you can now change in the [b]SF-Zero-Weight.toml[/b] the fraction of total items weight that will have effect on your total mass.  
-1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version or in the  [i](game root)\Plugins\[/i] for the ASI Loader version.
+1. You will find the [b]SF-Zero-Weight.toml[/b] in the installation directory of the mod. It should be in [i](game root)[/i][i]\Data\SFSE\plugins\[/i] directory for the SFSE version or in the  [i](game root)[/i] (location of the Starfield.exe) for the ASI Loader version.
     [size=2]If the file doesn't exist, start the game once, until the main menu, then the file should appear But close the game again, before doing any changes.[/size]
 2. Open the SF-Zero-Weight.toml with any Text Editor and change the value of [b]fractionOfWeight[/b].
 0.0 = 0%, 1.0 = 100%.
@@ -53,6 +53,7 @@ If you're 100% sure that you're using the right SFSE for your game version and y
 [list=1]
 [*]Your game version and update version (Steam/GamePass/Cracked, version 1.7.36 etc.)
 [*]Which mod version are you using, SFSE or ASI
+[*]Your installation method, if you're using Vortex, MO2 or manually
 [*]Provide content of log files. For SFSE all logs should be in the Documents directory ([i]C:\Users\(windows user name)\Documents\My Games\Starfield\SFSE\Logs\[/i]), there I need the content of [b]sfse.txt[/b], [b]sfse_loader.txt[/b] and [b]SF-Zero-Weight.log[/b] files.
 For the ASI version, if you use the v1.1.1 the log file [b]SF-Zero-Weight.log[/b] should be in the [i](game root)/Plugins/[/i] directory. For GamePass and v1.0.0 there are no logs, sorry.
 [/list]
