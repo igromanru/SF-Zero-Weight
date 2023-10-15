@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 # info
 project(
 	SF-Zero-Weight
-	VERSION 1.1.1
+	VERSION 1.1.2
 	LANGUAGES CXX
 )
 

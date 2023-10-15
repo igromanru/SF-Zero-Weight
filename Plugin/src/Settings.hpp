@@ -23,10 +23,4 @@ public:
 
         mainConfig.Load();
     }
-
-    void Save() noexcept
-    {
-        mainConfig.Generate();
-        mainConfig.Write();
-    }
 };

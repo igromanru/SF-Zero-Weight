@@ -2,43 +2,33 @@
 
 namespace
 {
-    float Hook_GetFractionOfWeight() 
+    union FloatInt
     {
-        // maybe some calculations
-        return Settings::GetSingleton()->GetFractionOfWeight();
-    }
+        float floatValue;
+        int intValue;
+    };
 
-    struct Prolog : Xbyak::CodeGenerator
+    struct CodeCave : Xbyak::CodeGenerator
     {
-        Prolog()
+        CodeCave(FloatInt fractionOfWeight)
         {
-            // save xmm1
+            // Original code
+            vcvtsi2ss(xmm0, xmm0, rdi);
+
+            // Save previous values
+            push(rdi);
             sub(rsp, 0x10);
             movdqu(ptr[rsp], xmm1);
 
-            // save xmm0
-            sub(rsp, 0x10);
-            movdqu(ptr[rsp], xmm0);
-        }
-    };
-
-    struct Epilog : Xbyak::CodeGenerator
-    {
-        Epilog()
-        {
-            // assign return value
-            vmovaps(xmm1, xmm0);
-
-            // restore xmm0
-            movdqu(xmm0, ptr[rsp]);
-            add(rsp, 0x10);
-
-            // calc new value
+            // Calculate new weight
+            mov(edi, fractionOfWeight.intValue);
+            movd(xmm1, edi);
             vmulss(xmm0, xmm0, xmm1);
 
-            // restore xmm1
+            // Restore values
             movdqu(xmm1, ptr[rsp]);
             add(rsp, 0x10);
+            pop(rdi);
         }
     };
 
@@ -47,26 +37,16 @@ namespace
         const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
         if (hookAddress)
         {
+            const FloatInt fractionOfWeight = { Settings::GetSingleton()->GetFractionOfWeight() };
             INFO("Found hook address: {:x}. Game base: {:x}", hookAddress, Module::get().base());
-            INFO("Settings->FractionOfWeight: {}", Settings::GetSingleton()->GetFractionOfWeight());
+            INFO("Settings->FractionOfWeight: {}", fractionOfWeight.floatValue);
 
-            Trampoline::AllocTrampoline(128);
+            CodeCave cave{ fractionOfWeight };
+            cave.ready();
 
-            Prolog prolog{};
-            prolog.ready();
-            Epilog epilog{};
-            epilog.ready();
-            
-            const auto caveHookHandle = AddCaveHook(
-                hookAddress, 
-                { 0, 5 }, 
-                FUNC_INFO(Hook_GetFractionOfWeight), 
-                &prolog,
-                &epilog,
-                HookFlag::kRestoreBeforeProlog);
-            caveHookHandle->Enable();
+            const auto patchHandle = AddASMPatch(hookAddress, { 0, 5 }, &cave);
+            patchHandle->Enable();
             INFO("Hook applied");
-            return true;
         }
         else
         {
@@ -82,18 +62,31 @@ DWORD WINAPI Thread(LPVOID param)
     return PatchZeroWeight();
 }
 
+extern "C" __declspec(dllexport) void InitializeASI()
+{
+#ifndef NDEBUG
+    MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF LongerNames ASI Plugin", NULL);
+#endif
+    dku::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
+    INFO("Game: {}", dku::Hook::GetProcessName());
+    Trampoline::AllocTrampoline(256);
+
+    CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));
+}
+
 
 BOOL APIENTRY DllMain(HMODULE a_hModule, DWORD a_dwReason, LPVOID a_lpReserved)
 {
     if (a_dwReason == DLL_PROCESS_ATTACH)
-    {
+    {/*
 #ifndef NDEBUG
         MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF-Zero-Weight ASI Plugin", NULL);
 #endif
         dku::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
         INFO("Game: {}", dku::Hook::GetProcessName());
+        Trampoline::AllocTrampoline(256);
 
-        CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));
+        CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));*/
     }
 
     return TRUE;
