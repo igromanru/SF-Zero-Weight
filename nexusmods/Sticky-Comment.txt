@@ -3,7 +3,8 @@ The mod uses signature scanning to find the correct address for the patch. It do
 However, the SFSE itself must be updated after each game update!  
 Make sure to update the [url=https://www.nexusmods.com/starfield/mods/106]Starfield Script Extender (SFSE)[/url] for the version of the game you're using before reporting that the mod is not working.
 
-Users of the ASI Loader version don't have to care about updates until the mod stops working.  
+Users of the ASI Loader version don't have to care about updates until the mod stops working. But, if you use the binkw32.dll of the ASI Loader, each game update will overwrite the DLL with the original one. Make sure that your ASI Loader is installed correctly after each game update.
+
 Thanks to the byte pattern signature scan, the mod verifies the integrity automatically, therefore it should never crash your game, if the code mismatches after a game update. It will simply stop working.
 
 [b][size=4]Bug Reporting[/size][/b]
