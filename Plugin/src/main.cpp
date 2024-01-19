@@ -38,7 +38,7 @@ namespace
         if (hookAddress)
         {
             const FloatInt fractionOfWeight = { Settings::GetSingleton()->GetFractionOfWeight() };
-            INFO("Found hook address: {:x}. Game base: {:x}", hookAddress, Module::get().base());
+            INFO("Found hook address: {:x}", hookAddress);
             INFO("Settings->FractionOfWeight: {}", fractionOfWeight.floatValue);
 
             CodeCave cave{ fractionOfWeight };
@@ -68,7 +68,7 @@ extern "C" __declspec(dllexport) void InitializeASI()
     MessageBoxA(NULL, "Loaded. You can attach the debugger now", "SF LongerNames ASI Plugin", NULL);
 #endif
     dku::Logger::Init(Plugin::NAME, std::to_string(Plugin::Version));
-    INFO("Game: {}", dku::Hook::GetProcessName());
+    INFO("Game: {}, base: {:x}", dku::Hook::GetProcessName(), Module::get().base());
     Trampoline::AllocTrampoline(256);
 
     CloseHandle(CreateThread(nullptr, 0, Thread, nullptr, 0, nullptr));
