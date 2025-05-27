@@ -13,20 +13,20 @@ namespace
         CodeCave(FloatInt fractionOfWeight)
         {
             // Original code
-            vcvtsi2ss(xmm0, xmm0, rdi);
+            vcvtsi2ss(xmm1, xmm1, rax);
 
             // Save previous values
             push(rdi);
             sub(rsp, 0x10);
-            movdqu(ptr[rsp], xmm1);
+            movdqu(ptr[rsp], xmm8);
 
             // Calculate new weight
-            mov(eax, fractionOfWeight.intValue);
-            movd(xmm1, eax);
-            vmulss(xmm0, xmm0, xmm1);
+            mov(edi, fractionOfWeight.intValue);
+            movd(xmm8, edi);
+            vmulss(xmm1, xmm1, xmm8);
 
             // Restore values
-            movdqu(xmm1, ptr[rsp]);
+            movdqu(xmm8, ptr[rsp]);
             add(rsp, 0x10);
             pop(rdi);
         }
