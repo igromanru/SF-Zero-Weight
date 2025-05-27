@@ -13,20 +13,20 @@ namespace
         CodeCave(FloatInt fractionOfWeight)
         {
             // Original code
-            vcvtsi2ss(xmm0, xmm0, rdi);
+            vcvtsi2ss(xmm1, xmm1, rax);
 
             // Save previous values
             push(rdi);
             sub(rsp, 0x10);
-            movdqu(ptr[rsp], xmm1);
+            movdqu(ptr[rsp], xmm8);
 
             // Calculate new weight
             mov(edi, fractionOfWeight.intValue);
-            movd(xmm1, edi);
-            vmulss(xmm0, xmm0, xmm1);
+            movd(xmm8, edi);
+            vmulss(xmm1, xmm1, xmm8);
 
             // Restore values
-            movdqu(xmm1, ptr[rsp]);
+            movdqu(xmm8, ptr[rsp]);
             add(rsp, 0x10);
             pop(rdi);
         }
@@ -34,7 +34,7 @@ namespace
 
     bool PatchZeroWeight()
     {
-        const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
+        const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 F2 2A C8 C5 FA 59 C1 EB">());
         if (hookAddress)
         {
             const FloatInt fractionOfWeight = { Settings::GetSingleton()->GetFractionOfWeight() };
