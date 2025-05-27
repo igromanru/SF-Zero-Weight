@@ -21,8 +21,8 @@ namespace
             movdqu(ptr[rsp], xmm1);
 
             // Calculate new weight
-            mov(edi, fractionOfWeight.intValue);
-            movd(xmm1, edi);
+            mov(eax, fractionOfWeight.intValue);
+            movd(xmm1, eax);
             vmulss(xmm0, xmm0, xmm1);
 
             // Restore values
@@ -35,7 +35,7 @@ namespace
 
     void PatchZeroWeight()
     {
-        const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 FA 2A C7 C5 F2 59 F0">());
+        const auto hookAddress = reinterpret_cast<uintptr_t>(Assembly::search_pattern<"C4 E1 F2 2A C8 C5 FA 59 C1 EB">());
         if (hookAddress)
         {
             const FloatInt fractionOfWeight = { Settings::GetSingleton()->GetFractionOfWeight() };
@@ -105,9 +105,6 @@ DLLEXPORT constexpr auto SFSEPlugin_Version = []() noexcept
     data.HasNoStructUse(true);
     data.IsLayoutDependent(false);
     data.CompatibleVersions({
-        SFSE::RUNTIME_SF_1_6_35,
-        SFSE::RUNTIME_SF_1_7_23,
-        SFSE::RUNTIME_SF_1_7_29,
         SFSE::RUNTIME_LATEST
     });
 
